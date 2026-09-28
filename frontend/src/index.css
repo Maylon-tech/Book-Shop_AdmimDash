@@ -2,3 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@theme {
+    --primary-color: #ffce1a;
+    --secondary-color: #0d0842;
+    --blackBackground: #f3f3f3;
+    --favorite: #ff5841;
+
+    -font-family: "arial", sans-serif; 
+}
