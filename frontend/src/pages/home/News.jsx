@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react' 
-import BookCard from "../books/BookCard"
+import React from 'react'
 
 // import Swiper components and styles
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -9,20 +8,12 @@ import 'swiper/css/pagination'
 import 'swiper/css/navigation'
 
 
+import { news } from '../../data/news'
+import { Link } from 'react-router-dom'
 
-const Recommended = () => {
-  const [books, setBooks] = useState([])
-  
-  useEffect(() => {
-    fetch("books.json")
-      .then(response => response.json())
-      .then(data => setBooks(data))
-  }, [])
-
+const News = () => {
   return (
-    <div className='py-16'>
-      <h2 className="text-3xl font-semibold mb-6">Recommended for you</h2>
-
+    <div>
       <Swiper
         slidesPerView={1}
         spaceBetween={30}        
@@ -49,19 +40,26 @@ const Recommended = () => {
         className="mySwiper"
       >
         {
-          books.length > 0 && books.slice(8, 18).map((book, index) => (
-            <SwiperSlide
-              key={index}
-            >
-              <BookCard 
-                book={book} 
-              />
-            </SwiperSlide>
-          ))
-        }
+            news.map((item, index) => (
+                <SwiperSlide
+                     key={index}
+                >
+                    <div className="">
+                        {/* content */}
+                        <div className="py-4">
+                            <Link to="/">
+                                <h3>{item.title}</h3>
+                            </Link>
+                            
+                        </div>
+                    </div>
+                    
+                </SwiperSlide>
+            ))
+        }        
       </Swiper>
     </div>
   )
 }
 
-export default Recommended
+export default News
