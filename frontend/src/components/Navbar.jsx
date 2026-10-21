@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom"
 import { useState } from "react"
+import { useSelector } from 'react-redux'
 
 import { HiMiniBars3CenterLeft } from 'react-icons/hi2'
 import { IoSearchOutline } from 'react-icons/io5'
@@ -28,7 +29,9 @@ const navigation = [
 const Navbar = () => {
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-  console.log(isDropdownOpen)
+  const cartItems = useSelector(state => state.cart.cartItems)
+  console.log(cartItems)
+
   const currentUser = true
 
 
@@ -96,7 +99,11 @@ const Navbar = () => {
                 to="/cart"
             >
                 <HiOutlineShoppingCart className="size-6" />
-                <span className="text-sm font-semibold sm:ml-1">0</span>
+                {
+                  cartItems.length > 0 
+                    ? <span className="text-sm font-semibold sm:ml-1">{cartItems.length}</span>
+                    : <span className="text-sm font-semibold sm:ml-1">0</span>
+                }
            </Link>
         </div>
       </nav>
