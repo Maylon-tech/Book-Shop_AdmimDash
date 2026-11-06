@@ -5,18 +5,36 @@ import { Link } from 'react-router-dom'
 
 
 const CheckoutPage = () => {
-    const [isChecked, setIsChecked] = useState(false)
+    
     const cartItems = useSelector((state) => state.cart.cartItems);
     const totalPrice = cartItems.reduce((acc, item) => acc + item.newPrice, 0).toFixed(2)
     const currentUser = true
     const {
-            register,
-            handleSubmit,
-            watch,
-            formState: { errors },
-        } = useForm()
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors },
+    } = useForm()
+    
+        const [isChecked, setIsChecked] = useState(true)
 
-        const onSubmit = (data) => console.log(data)
+        const onSubmit = (data) => {
+            console.log(data)
+            const newOrder = {
+                name: data.name,
+                email: data.email,
+                phone: data.phone,
+                address: {
+                    city: data.city,
+                    country: data.country,
+                    state: data.state,
+                    zipcode: data.zipcode
+                },
+                productIds: cartItems.map((item) => item?._id),
+                totalPrice: totalPrice,             
+            }
+            console.log('New Order:', newOrder)
+        }
 
     // const handleSubmit = (e) => {
     // e.preventDefault()
@@ -46,7 +64,7 @@ const CheckoutPage = () => {
                             <div className="lg:col-span-2">
                                 <div className="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
                                     <div className="md:col-span-5">
-                                        <label htmlFor="full_name">Full Name</label>
+                                        <label html="full_name">Full Name</label>
                                         <input
                                             
                                             type="text" name="name" id="name" className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"  />
@@ -54,39 +72,35 @@ const CheckoutPage = () => {
 
                                     <div className="md:col-span-5">
                                         <label html="email">Email Address</label>
-                                        <input
-                                            
+                                        <input                                            
                                             type="text" name="email" id="email" className="h-10 border mt-1 rounded px-4 w-full bg-gray-50" 
                                             disabled
                                             defaultValue={currentUser?.email}
-                                            placeholder="email@domain.com" />
+                                            placeholder="email@domain.com" 
+                                        />
                                     </div>
                                     <div className="md:col-span-5">
                                         <label html="phone">Phone Number</label>
-                                        <input
-                                            
+                                        <input                                            
                                             type="number" name="phone" id="phone" className="h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="+123 456 7890" />
                                     </div>
 
                                     <div className="md:col-span-3">
                                         <label htmlFor="address">Address / Street</label>
-                                        <input
-                                            
+                                        <input                                            
                                             type="text" name="address" id="address" className="h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="" />
                                     </div>
 
                                     <div className="md:col-span-2">
                                         <label htmlFor="city">City</label>
-                                        <input
-                                            
+                                        <input                                            
                                             type="text" name="city" id="city" className="h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="" />
                                     </div>
 
                                     <div className="md:col-span-2">
                                         <label htmlFor="country">Country / region</label>
                                         <div className="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1">
-                                            <input
-                                                
+                                            <input                                                
                                                 name="country" id="country" placeholder="Country" className="px-4 appearance-none outline-none text-gray-800 w-full bg-transparent"  />
                                             <button tabIndex="-1" className="cursor-pointer outline-none focus:outline-none transition-all text-gray-300 hover:text-red-600">
                                                 <svg className="w-4 h-4 mx-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -103,9 +117,9 @@ const CheckoutPage = () => {
                                     <div className="md:col-span-2">
                                         <label htmlFor="state">State / province</label>
                                         <div className="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1">
-                                            <input 
-                                            
-                                            name="state" id="state" placeholder="State" className="px-4 appearance-none outline-none text-gray-800 w-full bg-transparent"  />
+                                            <input                                             
+                                                name="state" id="state" placeholder="State" className="px-4 appearance-none outline-none text-gray-800 w-full bg-transparent"  
+                                            />
                                             <button  className="cursor-pointer outline-none focus:outline-none transition-all text-gray-300 hover:text-red-600">
                                                 <svg className="w-4 h-4 mx-2 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                                     <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -129,17 +143,20 @@ const CheckoutPage = () => {
                                         <div className="inline-flex items-center">
                                             <input 
                                             type="checkbox" name="billing_same" id="billing_same" className="form-checkbox" />
-                                            <label htmlFor="billing_same" className="ml-2 ">I am aggree to the <Link className='underline underline-offset-2 text-blue-600'>Terms & Conditions</Link> and <Link className='underline underline-offset-2 text-blue-600'>Shoping Policy.</Link></label>
+                                            <label htmlFor="billing_same" className="ml-2 ">I am aggree to the <Link className='underline underline-offset-2 text-blue-600'>
+                                            Terms & Conditions</Link> and <Link className='underline underline-offset-2 text-blue-600'>Shoping Policy.</Link>
+                                            </label>
                                         </div>
                                     </div>
-
-
 
                                     <div className="md:col-span-5 text-right">
                                         <div className="inline-flex items-end">
                                             <button 
-                                            disabled={!isChecked}
-                                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Place an Order</button>
+                                                disabled={!isChecked}
+                                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer"
+                                            >
+                                                Place an Order
+                                            </button>
                                         </div>
                                     </div>
 
