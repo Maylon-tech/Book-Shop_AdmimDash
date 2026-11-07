@@ -6,9 +6,14 @@ import dbConnect from "./config/db.js"
 import bookRoutes from "./src/books/bookRoute.js"
 
 const app = express()
-app.use(express.json())
-app.use(cors())
 dotenv.config()
+app.use(express.json())
+
+app.use(cors({
+    origin: ['http://localhost:5173'],
+    credentials: true
+}))
+
 
 // Routes API
 app.use("/api/books", bookRoutes)

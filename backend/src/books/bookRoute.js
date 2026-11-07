@@ -1,4 +1,5 @@
 import express from "express"
+import { createBook, getAllBooks, getBook, updateBook } from "./bookController.js"
 const router = express.Router()
 
 // POST = when submit something frontend to DB
@@ -6,14 +7,12 @@ const router = express.Router()
 // PUT = when update something in DB
 // DELETE = when delete something from DB
 
-router.post("/create-book", (req, res) => {
-    res.send("Add book to DB route API")
-    console.log("Add book to DB route API")
-})
+router.post("/create-book", createBook)
 
-router.get("/get-books", (req, res) => {
-    res.send("Get books route")
-    console.log("GET book from DB route API")
-})
+router.get("/get-books", getAllBooks)
+
+router.get("/get-book/:id", getBook)
+
+router.put("/update/:id", updateBook)
 
 export default router
