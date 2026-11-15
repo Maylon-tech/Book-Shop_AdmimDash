@@ -1,5 +1,5 @@
 import express from "express"
-import { createBook, getAllBooks, getBook, updateBook } from "./bookController.js"
+import { createBook, deleteBook, getAllBooks, getBook, updateBook } from "./bookController.js"
 const router = express.Router()
 
 // POST = when submit something frontend to DB
@@ -13,6 +13,8 @@ router.get("/get-books", getAllBooks)
 
 router.get("/get-book/:id", getBook)
 
-router.put("/update/:id", updateBook)
+router.put("/edit/:id", updateBook)
+
+router.delete("/remove-book/:id", deleteBook)
 
 export default router
